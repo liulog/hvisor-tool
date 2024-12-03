@@ -364,6 +364,26 @@ static int zone_list(int argc, char *argv[])
     return ret;
 }
 
+static int counter_print(int argc, char *argv[])
+{
+    int fd = open_dev();
+    int ret = ioctl(fd, HVISOR_COUNTER_PRINT, &argv);
+    if (ret < 0)
+        perror("counter_print: ioctl failed");
+    close(fd);
+    return ret;
+}
+
+static int counter_clear(int argc, char *argv[])
+{
+    int fd = open_dev();
+    int ret = ioctl(fd, HVISOR_COUNTER_CLEAR, &argv);
+    if (ret < 0)
+        perror("counter_clear: ioctl failed");
+    close(fd);
+    return ret;
+}
+
 int main(int argc, char *argv[])
 {
     int err;
@@ -395,6 +415,21 @@ int main(int argc, char *argv[])
         if (strcmp(argv[2], "start") == 0)
         {
             err = virtio_start(argc, argv);
+        }
+        else
+        {
+            help(1);
+        }
+    }
+    else if (strcmp(argv[1], "counter") == 0)
+    {
+        if (strcmp(argv[2], "print") == 0)
+        {
+            counter_print(argc, argv);
+        }
+        else if (strcmp(argv[2], "clear") ==0)
+        {
+            counter_clear(argc, argv);
         }
         else
         {

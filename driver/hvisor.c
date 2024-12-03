@@ -160,6 +160,24 @@ out:
     return ret;
 }
 
+static int hvisor_counter_print(void)
+{
+    int err;
+    err = hvisor_call(HVISOR_HC_COUNTER_PRINT, 0, 0);
+    if (err)
+        return err;
+    return 0;
+}
+
+static int hvisor_counter_clear(void)
+{
+    int err;
+    err = hvisor_call(HVISOR_HC_COUNTER_CLEAR, 0, 0);
+    if (err)
+        return err;
+    return 0;
+}
+
 static long hvisor_ioctl(struct file *file, unsigned int ioctl,
                          unsigned long arg)
 {
@@ -181,6 +199,12 @@ static long hvisor_ioctl(struct file *file, unsigned int ioctl,
         break;
     case HVISOR_FINISH_REQ:
         err = hvisor_finish_req();
+        break;
+    case HVISOR_COUNTER_PRINT:
+        err = hvisor_counter_print();
+        break;
+    case HVISOR_COUNTER_CLEAR:
+        err = hvisor_counter_clear();
         break;
     default:
         err = -EINVAL;

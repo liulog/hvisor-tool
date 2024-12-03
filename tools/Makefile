@@ -4,7 +4,7 @@ objects = $(wildcard *.c) ../cJSON/cJSON.c
 ifeq ($(ARCH), arm64)
 	CC := aarch64-linux-gnu-gcc
 else ifeq ($(ARCH), riscv)
-	CC := riscv64-linux-gnu-gcc
+	CC := riscv64-unknown-linux-gnu-gcc
 endif
 
 .PHONY: all clean
