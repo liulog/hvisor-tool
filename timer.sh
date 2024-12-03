@@ -2,7 +2,8 @@
 
 insmod hvisor.ko
 
-time_freq=50000000
+# time_base 为 1MHz
+time_freq=1000000
 time_start=$(./gettime)
 
 ./hvisor counter clear
